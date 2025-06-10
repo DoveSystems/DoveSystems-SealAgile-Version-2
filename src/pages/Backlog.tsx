@@ -17,8 +17,7 @@ const Backlog = () => {
     points: 3,
     priority: 'medium',
     status: 'backlog',
-    assignee: null,
-    tags: []
+    assignee: undefined
   });
 
   if (!project) {
