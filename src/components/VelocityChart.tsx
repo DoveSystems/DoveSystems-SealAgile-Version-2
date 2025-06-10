@@ -29,9 +29,10 @@ ChartJS.register(
 type VelocityChartProps = {
   type?: 'line' | 'bar';
   height?: number;
+  timeRange?: 'all' | 'last6' | 'last3';
 };
 
-const VelocityChart = ({ type = 'line', height = 300 }: VelocityChartProps) => {
+const VelocityChart = ({ type = 'line', height = 300, timeRange = 'all' }: VelocityChartProps) => {
   const { project, getSprintVelocity } = useProject();
   const [chartData, setChartData] = useState<any>(null);
 
@@ -49,8 +50,15 @@ const VelocityChart = ({ type = 'line', height = 300 }: VelocityChartProps) => {
       completedSprints.push(activeSprint);
     }
 
+    let sprints = completedSprints;
+    if (timeRange === 'last6') {
+      sprints = completedSprints.slice(-6);
+    } else if (timeRange === 'last3') {
+      sprints = completedSprints.slice(-3);
+    }
+
     // If no sprints, use sample data
-    if (completedSprints.length === 0) {
+    if (sprints.length === 0) {
       const labels = ['Sprint 1', 'Sprint 2', 'Sprint 3', 'Sprint 4', 'Sprint 5'];
       const velocityData = [18, 21, 19, 25, 22];
       const commitmentData = [20, 20, 22, 24, 24];
@@ -84,9 +92,9 @@ const VelocityChart = ({ type = 'line', height = 300 }: VelocityChartProps) => {
     }
 
     // Prepare real data
-    const labels = completedSprints.map(sprint => sprint.name);
-    const velocityData = completedSprints.map(sprint => getSprintVelocity(sprint.id));
-    const commitmentData = completedSprints.map(sprint => {
+    const labels = sprints.map(sprint => sprint.name);
+    const velocityData = sprints.map(sprint => getSprintVelocity(sprint.id));
+    const commitmentData = sprints.map(sprint => {
       const sprintStories = sprint.stories
         .map(storyId => project.stories.find(s => s.id === storyId))
         .filter(Boolean) as any;
@@ -119,7 +127,7 @@ const VelocityChart = ({ type = 'line', height = 300 }: VelocityChartProps) => {
         }
       ]
     });
-  }, [project, getSprintVelocity, type]);
+  }, [project, getSprintVelocity, type, timeRange]);
 
   const options = {
     responsive: true,

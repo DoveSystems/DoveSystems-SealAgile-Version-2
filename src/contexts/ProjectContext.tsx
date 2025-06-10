@@ -57,6 +57,7 @@ type ProjectContextType = {
   moveStoryToSprint: (storyId: string, sprintId: string) => void;
   addTeamMember: (member: Omit<TeamMember, 'id'>) => void;
   updateTeamMember: (memberId: string, updates: Partial<TeamMember>) => void;
+  removeTeamMember: (memberId: string) => void;
   getSprintVelocity: (sprintId: string) => number;
   getAverageVelocity: (sprintCount?: number) => number;
 };
@@ -292,6 +293,15 @@ export const ProjectProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
+  const removeTeamMember = (memberId: string) => {
+    if (!project) return;
+
+    setProjectState({
+      ...project,
+      team: project.team.filter(member => member.id !== memberId)
+    });
+  };
+
   const getSprintVelocity = (sprintId: string): number => {
     if (!project) return 0;
     
@@ -340,6 +350,7 @@ export const ProjectProvider = ({ children }: { children: ReactNode }) => {
       moveStoryToSprint,
       addTeamMember,
       updateTeamMember,
+      removeTeamMember,
       getSprintVelocity,
       getAverageVelocity
     }}>
