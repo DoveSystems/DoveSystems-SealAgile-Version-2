@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  --secondary-gradient: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+  --accent-gradient: linear-gradient(135deg, #d946ef 0%, #a21caf 100%);
+  --dark-gradient: linear-gradient(135deg, #1e1b4b 0%, #121212 100%);
+}
+
+body {
+  min-height: 100vh;
+  background-color: #121212;
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(20, 184, 166, 0.1) 0%, transparent 50%);
+  color: #f8fafc;
+  font-family: 'Inter', sans-serif;
+}
+
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-dark;
+  }
+  
+  .btn-primary {
+    @apply bg-primary-600 hover:bg-primary-700 text-white focus:ring-primary-500;
+  }
+  
+  .btn-secondary {
+    @apply bg-secondary-600 hover:bg-secondary-700 text-white focus:ring-secondary-500;
+  }
+  
+  .btn-accent {
+    @apply bg-accent-600 hover:bg-accent-700 text-white focus:ring-accent-500;
+  }
+  
+  .btn-outline {
+    @apply border border-primary-500 text-primary-500 hover:bg-primary-500 hover:text-white focus:ring-primary-500;
+  }
+  
+  .card {
+    @apply bg-gray-900/80 backdrop-blur-sm rounded-xl border border-gray-800 shadow-lg overflow-hidden;
+  }
+  
+  .glass-card {
+    @apply bg-gray-900/40 backdrop-blur-md rounded-xl border border-gray-800/50 shadow-lg overflow-hidden;
+  }
+  
+  .input {
+    @apply bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-light focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent;
+  }
+  
+  .futuristic-border {
+    @apply relative before:absolute before:inset-0 before:p-[1px] before:rounded-xl before:bg-gradient-to-r before:from-primary-500 before:via-secondary-500 before:to-accent-500 before:mask-border;
+  }
+  
+  .glow {
+    @apply relative after:absolute after:inset-0 after:rounded-xl after:opacity-0 hover:after:opacity-100 after:transition-opacity after:duration-300 after:shadow-neon;
+  }
+  
+  .mask-border {
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1e1e1e;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4338ca;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3730a3;
+}
